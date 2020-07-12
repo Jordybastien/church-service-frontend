@@ -160,3 +160,57 @@ body {
 #root {
   padding-bottom: 20px;
 }
+
+.ant-modal-content {
+  border-radius: 10px !important;
+}
+
+.modal-title {
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.modal-time {
+  font-size: 1em;
+}
+
+.modal-header-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+}
+
+.txtbox {
+  width: 100%;
+  border: 1px solid #00000024;
+  border-radius: 5px;
+  height: 30px;
+  padding-left: 10px;
+}
+
+.input-label {
+}
+
+.txt-box-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.submit-btn-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.fa-spinner {
+  animation: spinner 1s linear infinite;
+}
