@@ -71,6 +71,8 @@ body {
 
 .services-container {
   width: 100%;
+  height: 370px;
+  overflow: auto;
 }
 
 .service {
@@ -213,4 +215,100 @@ body {
 
 .fa-spinner {
   animation: spinner 1s linear infinite;
+}
+
+.custom-padding-top {
+  padding-top: 3rem;
+}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .service-title {
+    font-size: 1.5em !important;
+  }
+  .header-text {
+    font-size: 4em !important;
+  }
+  .stats {
+    padding: 0px 20px 0px 20px !important;
+  }
+  .custom-btn {
+    width: 100px !important;
+    font-size: 1em !important;
+  }
+  .custom-padding-top {
+    padding-top: 0rem;
+  }
+  .services-container {
+    height: 100% !important;
+  }
+}
+
+/* iPhone 5 (portrait &amp; landscape)----------- */
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
+  .service-title {
+    font-size: 1.5em !important;
+  }
+  .header-text {
+    font-size: 4em !important;
+  }
+  .stats {
+    padding: 0px 20px 0px 20px !important;
+  }
+  .custom-btn {
+    width: 100px !important;
+    font-size: 1em !important;
+  }
+  .custom-padding-top {
+    padding-top: 0rem;
+  }
+  .services-container {
+    height: 100% !important;
+  }
+}
+
+/* iPhone 5 (landscape)----------- */
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {
+  .service-title {
+    font-size: 1.5em !important;
+  }
+  .header-text {
+    font-size: 4em !important;
+  }
+  .stats {
+    padding: 0px 20px 0px 20px !important;
+  }
+  .custom-btn {
+    width: 100px !important;
+    font-size: 1em !important;
+  }
+  .custom-padding-top {
+    padding-top: 0rem;
+  }
+  .services-container {
+    height: 100% !important;
+  }
+}
+
+/* iPhone 5 (portrait)----------- */
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {
+  .service-title {
+    font-size: 1.5em !important;
+  }
+  .header-text {
+    font-size: 4em !important;
+  }
+  .stats {
+    padding: 0px 20px 0px 20px !important;
+  }
+  .custom-btn {
+    width: 100px !important;
+    font-size: 1em !important;
+  }
+  .custom-padding-top {
+    padding-top: 0rem;
+  }
+  .services-container {
+    height: 100% !important;
+  }
 }

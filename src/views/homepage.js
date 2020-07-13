@@ -123,8 +123,8 @@ class Homepage extends Component {
               </div>
             </div>
             <div className="row">
-              <div className="col-md-7 pt-5">
-                <div className="pt-5">
+              <div className="col-md-7 custom-padding-top">
+                <div className="custom-padding-top">
                   <div>
                     <span className="header-text"> Welcome to ZTCC</span>
                   </div>
