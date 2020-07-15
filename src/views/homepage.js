@@ -1,9 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import Select from 'react-select';
 import { Button, Progress, Modal } from 'antd';
-import TextBox from '../components/textbox';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { connect } from 'react-redux';
+
 
 const options = [
   { value: 'kinyarwanda', label: 'Kinyarwanda' },
@@ -15,6 +14,8 @@ class Homepage extends Component {
     selectedOption: null,
     modal1Visible: false,
     loading: false,
+    serviceId: null,
+    service: null,
   };
 
   handleSelect = () => {
@@ -23,9 +24,14 @@ class Homepage extends Component {
 
   handleSubmit = () => this.setState({ loading: true });
 
-  handleRequest = () => this.setState({ modal1Visible: true });
+  handleRequest = (serviceId, service) =>
+    this.setState({ modal1Visible: true, serviceId, service });
+
   render() {
     const { selectedOption, modal1Visible, loading } = this.state;
+    const { services } = this.props;
+    console.log('=======>services', services);
+
     return (
       <Fragment>
         <Modal
@@ -34,68 +40,7 @@ class Homepage extends Component {
           footer={null}
           onCancel={() => this.setState({ modal1Visible: false })}
         >
-          <div className="container">
-            <div className="row mb-5">
-              <div className="modal-header-info">
-                <div>
-                  <span className="modal-title">1st service</span>
-                </div>
-                <div>
-                  <span className="modal-time">7:30 - 8:30</span>
-                </div>
-              </div>
-            </div>
-            <div className="row txt-box-container">
-              <div>
-                <span className="input-label">Full Names</span>
-              </div>
-              <div>
-                <TextBox name="fullName" />
-              </div>
-            </div>
-            <div className="row txt-box-container">
-              <div>
-                <span className="input-label">Phone Number</span>
-              </div>
-              <div>
-                <TextBox name="phone" />
-              </div>
-            </div>
-            <div className="row txt-box-container">
-              <div>
-                <span className="input-label">Home Address</span>
-              </div>
-              <div>
-                <TextBox name="address" />
-              </div>
-            </div>
-            <div className="row txt-box-container">
-              <div>
-                <span className="input-label">Age</span>
-              </div>
-              <div>
-                <TextBox name="age" />
-              </div>
-            </div>
-            <div className="submit-btn-container">
-              <Button
-                type="primary"
-                className="custom-btn"
-                onClick={() => this.handleSubmit()}
-              >
-                {loading ? (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    size="sm"
-                    color="#fff"
-                    className="ml-2"
-                  />
-                ) : (
-                  'Register'
-                )}
-              </Button>
-            </div>
-          </div>
+
         </Modal>
         <div className="main-container">
           <div className="container">
@@ -142,117 +87,63 @@ class Homepage extends Component {
                     <span className="date-box-label">12</span>
                   </div>
                   <div className="services-container">
-                    <div className="border-bottom single-service">
-                      <div className="service">
-                        <div className="service-info">
-                          <div>
-                            <span className="service-title">1st service</span>
+                    {services.length !== 0 &&
+                      services.map((service, index) => (
+                        <div
+                          className={`${
+                            index + 1 !== services.length
+                              ? 'border-bottom'
+                              : 'mb-5'
+                          } single-service`}
+                          key={service.serviceId}
+                        >
+                          <div className="service">
+                            <div className="service-info">
+                              <div>
+                                <span className="service-title">
+                                  {service.title}
+                                </span>
+                              </div>
+                              <div>
+                                <span className="service-time">
+                                  {service.startAt.substr(0, 5)} -{' '}
+                                  {service.endAt.substr(0, 5)}
+                                </span>
+                              </div>
+                            </div>
+                            <div>
+                              <Button
+                                type="primary"
+                                className="custom-btn"
+                                onClick={() =>
+                                  this.handleRequest(service.serviceId, service)
+                                }
+                                disabled={
+                                  service.numberOfSeats - service.takenSeats ===
+                                  0
+                                }
+                              >
+                                Register
+                              </Button>
+                            </div>
                           </div>
-                          <div>
-                            <span className="service-time">7:30 - 8:30</span>
-                          </div>
-                        </div>
-                        <div>
-                          <Button
-                            type="primary"
-                            className="custom-btn"
-                            onClick={() => this.handleRequest()}
-                          >
-                            Register
-                          </Button>
-                        </div>
-                      </div>
-                      <div className="stats">
-                        <div className="stat-graph">
-                          <Progress percent={70} showInfo={false} />
-                        </div>
-                        <div className="stat-text">50 seats left</div>
-                      </div>
-                    </div>
-                    <div className="border-bottom single-service">
-                      <div className="service">
-                        <div className="service-info">
-                          <div>
-                            <span className="service-title">2nd service</span>
-                          </div>
-                          <div>
-                            <span className="service-time">9:30 - 10:30</span>
-                          </div>
-                        </div>
-                        <div>
-                          <Button
-                            type="primary"
-                            className="custom-btn"
-                            onClick={() => this.handleRequest()}
-                            disabled={true}
-                          >
-                            Register
-                          </Button>
-                        </div>
-                      </div>
-                      <div className="stats">
-                        <div className="stat-graph">
-                          <Progress percent={100} showInfo={false} />
-                        </div>
-                        <div className="stat-text full-service">
-                          Full service
-                        </div>
-                      </div>
-                    </div>
-                    <div className="border-bottom single-service">
-                      <div className="service">
-                        <div className="service-info">
-                          <div>
-                            <span className="service-title">3rd service</span>
-                          </div>
-                          <div>
-                            <span className="service-time">11:30 - 12:30</span>
+                          <div className="stats">
+                            <div className="stat-graph">
+                              <Progress
+                                percent={
+                                  (service.takenSeats * 100) /
+                                  service.numberOfSeats
+                                }
+                                showInfo={false}
+                              />
+                            </div>
+                            <div className="stat-text">
+                              {service.numberOfSeats - service.takenSeats} seats
+                              left
+                            </div>
                           </div>
                         </div>
-                        <div>
-                          <Button
-                            type="primary"
-                            className="custom-btn"
-                            onClick={() => this.handleRequest()}
-                          >
-                            Register
-                          </Button>
-                        </div>
-                      </div>
-                      <div className="stats">
-                        <div className="stat-graph">
-                          <Progress percent={0} showInfo={false} />
-                        </div>
-                        <div className="stat-text">350 seats left</div>
-                      </div>
-                    </div>
-                    <div className="mb-5 single-service">
-                      <div className="service">
-                        <div className="service-info">
-                          <div>
-                            <span className="service-title">4th service</span>
-                          </div>
-                          <div>
-                            <span className="service-time">13:30 - 14:30</span>
-                          </div>
-                        </div>
-                        <div>
-                          <Button
-                            type="primary"
-                            className="custom-btn"
-                            onClick={() => this.handleRequest()}
-                          >
-                            Register
-                          </Button>
-                        </div>
-                      </div>
-                      <div className="stats">
-                        <div className="stat-graph">
-                          <Progress percent={70} showInfo={false} />
-                        </div>
-                        <div className="stat-text">50 seats left</div>
-                      </div>
-                    </div>
+                      ))}
                   </div>
                   <div className="services-footer">
                     <div className="footer-element">
@@ -278,4 +169,10 @@ class Homepage extends Component {
   }
 }
 
-export default Homepage;
+const mapStateToProps = ({ services }) => {
+  return {
+    services: Object.values(services),
+  };
+};
+
+export default connect(mapStateToProps)(Homepage);
