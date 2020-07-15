@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import Select from 'react-select';
-import { Button, Progress, Modal } from 'antd';
+import { Button, Progress, Modal, Result } from 'antd';
 import { connect } from 'react-redux';
-
+import BookService from '../components/bookService';
+import { handleNewBooking } from '../actions/booking';
 
 const options = [
   { value: 'kinyarwanda', label: 'Kinyarwanda' },
@@ -13,34 +14,75 @@ class Homepage extends Component {
   state = {
     selectedOption: null,
     modal1Visible: false,
+    modal2Visible: false,
     loading: false,
     serviceId: null,
     service: null,
+    errorMessage: '',
   };
 
   handleSelect = () => {
     console.log('======> Clicked');
   };
 
-  handleSubmit = () => this.setState({ loading: true });
+  handleSubmit = (data) => {
+    this.setState({ loading: true, errorMessage: '' });
+    const { serviceId } = this.state;
+    data.serviceID = serviceId;
+
+    this.props.dispatch(handleNewBooking(data)).then((res) => {
+      this.setState({ loading: false });
+      
+      if (res.type !== 'LOG_ERROR') {
+        this.setState({ modal1Visible: false, modal2Visible: true });
+      } else {
+        this.setState({ errorMessage: res.error });
+      }
+    });
+  };
 
   handleRequest = (serviceId, service) =>
     this.setState({ modal1Visible: true, serviceId, service });
 
   render() {
-    const { selectedOption, modal1Visible, loading } = this.state;
+    const {
+      selectedOption,
+      modal1Visible,
+      loading,
+      service,
+      errorMessage,
+      modal2Visible,
+    } = this.state;
     const { services } = this.props;
-    console.log('=======>services', services);
 
     return (
       <Fragment>
+        {service && (
+          <Modal
+            centered
+            visible={modal1Visible}
+            footer={null}
+            onCancel={() => this.setState({ modal1Visible: false })}
+          >
+            <BookService
+              loading={loading}
+              service={service}
+              handleSubmit={this.handleSubmit}
+              errorMessage={errorMessage}
+            />
+          </Modal>
+        )}
         <Modal
           centered
-          visible={modal1Visible}
+          visible={modal2Visible}
           footer={null}
-          onCancel={() => this.setState({ modal1Visible: false })}
+          onCancel={() => this.setState({ modal2Visible: false })}
         >
-
+          <Result
+            status="success"
+            title="Booked Successfully"
+            subTitle="The seat has been booked successfully, Kindly wait for a confirmation SMS"
+          />
         </Modal>
         <div className="main-container">
           <div className="container">
@@ -95,7 +137,7 @@ class Homepage extends Component {
                               ? 'border-bottom'
                               : 'mb-5'
                           } single-service`}
-                          key={service.serviceId}
+                          key={index}
                         >
                           <div className="service">
                             <div className="service-info">
@@ -116,7 +158,7 @@ class Homepage extends Component {
                                 type="primary"
                                 className="custom-btn"
                                 onClick={() =>
-                                  this.handleRequest(service.serviceId, service)
+                                  this.handleRequest(service.serviceID, service)
                                 }
                                 disabled={
                                   service.numberOfSeats - service.takenSeats ===
