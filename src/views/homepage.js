@@ -29,7 +29,8 @@ class Homepage extends Component {
     this.setState({ loading: true, errorMessage: '' });
     const { serviceId } = this.state;
     data.serviceID = serviceId;
-
+    data.MSISDN = '+25' + data.MSISDN;
+    
     this.props.dispatch(handleNewBooking(data)).then((res) => {
       this.setState({ loading: false });
 
@@ -187,7 +188,7 @@ class Homepage extends Component {
                         </div>
                       ))
                     ) : (
-                      <div className='px-3'>
+                      <div className="px-3">
                         <Skeleton active />
                         <Skeleton active />
                         <Skeleton active />
