@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Select from 'react-select';
-import { Button, Progress, Modal, Result } from 'antd';
+import { Button, Progress, Modal, Result, Skeleton } from 'antd';
 import { connect } from 'react-redux';
 import BookService from '../components/bookService';
 import { handleNewBooking } from '../actions/booking';
@@ -32,7 +32,7 @@ class Homepage extends Component {
 
     this.props.dispatch(handleNewBooking(data)).then((res) => {
       this.setState({ loading: false });
-      
+
       if (res.type !== 'LOG_ERROR') {
         this.setState({ modal1Visible: false, modal2Visible: true });
       } else {
@@ -129,7 +129,7 @@ class Homepage extends Component {
                     <span className="date-box-label">12</span>
                   </div>
                   <div className="services-container">
-                    {services.length !== 0 &&
+                    {services.length !== 0 ? (
                       services.map((service, index) => (
                         <div
                           className={`${
@@ -185,7 +185,14 @@ class Homepage extends Component {
                             </div>
                           </div>
                         </div>
-                      ))}
+                      ))
+                    ) : (
+                      <div className='px-3'>
+                        <Skeleton active />
+                        <Skeleton active />
+                        <Skeleton active />
+                      </div>
+                    )}
                   </div>
                   <div className="services-footer">
                     <div className="footer-element">
