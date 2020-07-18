@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Routing from './router';
 import { connect } from 'react-redux';
 import { handleInitialData } from './actions/initialData';
-import ReactLoading from 'react-loading';
 
 class App extends Component {
   componentDidMount() {

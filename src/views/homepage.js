@@ -1,228 +1,184 @@
-import React, { Component, Fragment } from 'react';
-import Select from 'react-select';
-import { Button, Progress, Modal, Result, Skeleton } from 'antd';
-import { connect } from 'react-redux';
-import BookService from '../components/bookService';
-import { handleNewBooking } from '../actions/booking';
-
-const options = [
-  { value: 'kinyarwanda', label: 'Kinyarwanda' },
-  { value: 'english', label: 'English' },
-];
+import React, { Component } from 'react';
 
 class Homepage extends Component {
-  state = {
-    selectedOption: null,
-    modal1Visible: false,
-    modal2Visible: false,
-    loading: false,
-    serviceId: null,
-    service: null,
-    errorMessage: '',
-  };
-
-  handleSelect = () => {
-    console.log('======> Clicked');
-  };
-
-  handleSubmit = (data) => {
-    this.setState({ loading: true, errorMessage: '' });
-    const { serviceId } = this.state;
-    data.serviceID = serviceId;
-    data.MSISDN = '+25' + data.MSISDN;
-    
-    this.props.dispatch(handleNewBooking(data)).then((res) => {
-      this.setState({ loading: false });
-
-      if (res.type !== 'LOG_ERROR') {
-        this.setState({ modal1Visible: false, modal2Visible: true });
-      } else {
-        this.setState({ errorMessage: res.error });
-      }
-    });
-  };
-
-  handleRequest = (serviceId, service) =>
-    this.setState({ modal1Visible: true, serviceId, service });
-
+  state = {};
   render() {
-    const {
-      selectedOption,
-      modal1Visible,
-      loading,
-      service,
-      errorMessage,
-      modal2Visible,
-    } = this.state;
-    const { services } = this.props;
-
     return (
-      <Fragment>
-        {service && (
-          <Modal
-            centered
-            visible={modal1Visible}
-            footer={null}
-            onCancel={() => this.setState({ modal1Visible: false })}
-          >
-            <BookService
-              loading={loading}
-              service={service}
-              handleSubmit={this.handleSubmit}
-              errorMessage={errorMessage}
-            />
-          </Modal>
-        )}
-        <Modal
-          centered
-          visible={modal2Visible}
-          footer={null}
-          onCancel={() => this.setState({ modal2Visible: false })}
-        >
-          <Result
-            status="success"
-            title="Booked Successfully"
-            subTitle="The seat has been booked successfully, Kindly wait for a confirmation SMS"
-          />
-        </Modal>
-        <div className="main-container">
-          <div className="container">
-            <div className="row mb-3">
-              <div className="col-md-6 d-flex justify-content-center">
+      <div className="homepage-wrapper">
+        <div className="homepage-container">
+          <section id="nav" className="custom-nav">
+            <div className="container">
+              <div className="row d-flex justify-content-between pt-4">
                 <div>
                   <img
-                    src={require('../assets/logo.png')}
+                    src={require('../assets/main-logo.png')}
                     alt="ZTCC"
                     className="logo"
                   />
                 </div>
+                <div>
+                  <span className="nav-label">About us</span>
+                </div>
               </div>
-              <div className="col-md-6">
-                <div className="d-flex justify-content-end pt-4">
-                  <Select
-                    value={selectedOption}
-                    onChange={this.handleSelect}
-                    options={options}
-                    placeholder="Language"
-                    className="language-select"
-                    isSearchable={false}
+            </div>
+          </section>
+          <section id="about-us" className="about-us">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-8 pt-5">
+                  <div className="mb-3">
+                    <span className="about-us-title">
+                      Booking Church Services
+                    </span>
+                  </div>
+                  <div>
+                    <span className="about-us-description">
+                      During these unprecedented times where the world is
+                      fighting against COVID-19, one way to avoid the spread is
+                      to reduce crowds. <br />
+                      As churches are opening, one way of controlling crowds of
+                      congregants is by providing a way that they can book in
+                      advance their most preferable service since the number of
+                      attendants will be reduced to a smaller number.
+                    </span>
+                  </div>
+                </div>
+                <div className="col-md-4 d-flex justify-content-end">
+                  <img
+                    src={require('../assets/icon-2.png')}
+                    alt="ZTCC"
+                    className="another-logo"
                   />
                 </div>
               </div>
             </div>
-            <div className="row">
-              <div className="col-md-7 custom-padding-top">
-                <div className="custom-padding-top">
-                  <div>
-                    <span className="header-text"> Welcome to ZTCC</span>
-                  </div>
-                  <div>
-                    <span className="register-text">
-                      Register here for Zion Temple Ngoma church services.
-                    </span>
-                  </div>
+          </section>
+          <section id="covid-section" className="covid-section">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-3">
+                  <img
+                    src={require('../assets/Cov-19.svg')}
+                    alt="ZTCC"
+                    className="covid-img"
+                  />
                 </div>
-              </div>
-              <div className="col-md-5">
-                <div className="services-card">
-                  <div className="date-box mb-5">
-                    <span className="date-box-label">Jul</span>
-                    <span className="date-box-label">12</span>
+                <div className="col-md-9">
+                  <div className="mb-3">
+                    <span className="covid-title">Covid-19 Measures</span>
                   </div>
-                  <div className="services-container">
-                    {services.length !== 0 ? (
-                      services.map((service, index) => (
-                        <div
-                          className={`${
-                            index + 1 !== services.length
-                              ? 'border-bottom'
-                              : 'mb-5'
-                          } single-service`}
-                          key={index}
-                        >
-                          <div className="service">
-                            <div className="service-info">
-                              <div>
-                                <span className="service-title">
-                                  {service.title}
-                                </span>
-                              </div>
-                              <div>
-                                <span className="service-time">
-                                  {service.startAt.substr(0, 5)} -{' '}
-                                  {service.endAt.substr(0, 5)}
-                                </span>
-                              </div>
-                            </div>
-                            <div>
-                              <Button
-                                type="primary"
-                                className="custom-btn"
-                                onClick={() =>
-                                  this.handleRequest(service.serviceID, service)
-                                }
-                                disabled={
-                                  service.numberOfSeats - service.takenSeats ===
-                                  0
-                                }
-                              >
-                                Register
-                              </Button>
-                            </div>
-                          </div>
-                          <div className="stats">
-                            <div className="stat-graph">
-                              <Progress
-                                percent={
-                                  (service.takenSeats * 100) /
-                                  service.numberOfSeats
-                                }
-                                showInfo={false}
-                              />
-                            </div>
-                            <div className="stat-text">
-                              {service.numberOfSeats - service.takenSeats} seats
-                              left
-                            </div>
-                          </div>
-                        </div>
-                      ))
-                    ) : (
-                      <div className="px-3">
-                        <Skeleton active />
-                        <Skeleton active />
-                        <Skeleton active />
-                      </div>
-                    )}
-                  </div>
-                  <div className="services-footer">
-                    <div className="footer-element">
-                      <div>
-                        <span className="booked"></span>
-                      </div>
-                      <span>booked</span>
-                    </div>
-                    <div className="footer-element">
-                      <div>
-                        <span className="available"></span>
-                      </div>
-                      <span>available</span>
-                    </div>
+                  <div>
+                    <ul className="covid-list">
+                      <li>
+                        <span className="covid-list-item">
+                          Wear your face mask all the time.
+                        </span>
+                      </li>
+                      <li>
+                        <span className="covid-list-item">
+                          Do not shake hands or give hugs.
+                        </span>
+                      </li>
+                      <li>
+                        <span className="covid-list-item">
+                          People with colds and/ or fever (38 degrees or higher)
+                          stay at home. Upon entering, you will be asked by
+                          someone on the welcome team if you have fever or cold.
+                        </span>
+                      </li>
+                      <li>
+                        <span className="covid-list-item">
+                          Keep 1.5 meters away both inside and outside the
+                          building.
+                        </span>
+                      </li>
+                      <li>
+                        <span className="covid-list-item">
+                          Your hands will be sprayed with disinfectant gel upon
+                          entering.
+                        </span>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
             </div>
+          </section>
+          <section id="features-section" className="features-section">
+            <div className="container">
+              <div className="row features-row">
+                <div className="mb-3">
+                  <span className="features-title">FEATURES</span>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-4 d-flex flex-direction-row single-feature">
+                  <img
+                    src={require('../assets/Feature.png')}
+                    alt="ZTCC"
+                    className="feature-img-square"
+                  />
+                  <div className="d-flex align-items-center pl-3">
+                    <span className="feature-label">Create Events</span>
+                  </div>
+                </div>
+                <div className="col-md-4 d-flex flex-direction-row single-feature">
+                  <img
+                    src={require('../assets/Report.png')}
+                    alt="ZTCC"
+                    className="feature-img"
+                  />
+                  <div className="d-flex align-items-center pl-3">
+                    <span className="feature-label">Report</span>
+                  </div>
+                </div>
+                <div className="col-md-4 d-flex flex-direction-row single-feature">
+                  <img
+                    src={require('../assets/Feature.png')}
+                    alt="ZTCC"
+                    className="feature-img-square"
+                  />
+                  <div className="d-flex align-items-center pl-3">
+                    <span className="feature-label">Send SMS</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="churches-section" className="churches-section">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-2">
+                  <span className="churches-title">CHURCHES</span>
+                </div>
+                <div className="col-md-10 d-flex flex-direction-row pl-5">
+                  <div className="church-card">
+                    <img
+                      src={require('../assets/logo.png')}
+                      alt="ZTCC"
+                      className="church-icon"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="footer" className="footer">
+            <div className="container">
+              <div className="row">
+                <span className='footer-label'>© COPYRIGHT {new Date().getFullYear()}</span>
+              </div>
+            </div>
+          </section>
+          <div className='bottom-line'>
+              <span className='block-1'/>
+              <span className='block-2'/>
+              <span className='block-3'/>
           </div>
         </div>
-      </Fragment>
+      </div>
     );
   }
 }
 
-const mapStateToProps = ({ services }) => {
-  return {
-    services: Object.values(services),
-  };
-};
-
-export default connect(mapStateToProps)(Homepage);
+export default Homepage;

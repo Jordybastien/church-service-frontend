@@ -7,24 +7,47 @@
   --color-light-slate-gray: #909198;
   --color-white: #fafafa;
   --color-light: #dee2e4;
+  --color-custom-gray: #b7b8bc;
 }
-
+#root {
+  height: 100%;
+}
 body {
   font-family: 'Montserrat', sans-serif !important;
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+}
+.wrapper {
   background: url('./assets/bg.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   padding: 20px;
+  width: 100%;
+  position: relative;
+  height: 100%;
 }
-
+.homepage-wrapper {
+  background: url('./assets/bg_lines.png') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100%;
+  position: relative;
+  height: 100%;
+}
 .main-container {
   background-color: var(--color-white);
   padding: 10px;
   color: var(--color-dark-slate-gray);
 }
-
+.homepage-container {
+  /* background-color: var(--color-white); */
+  height: 100%;
+}
 .logo {
   width: 80px;
 }
@@ -159,9 +182,9 @@ body {
   color: var(--color-indian-red);
 }
 
-#root {
+/* #root {
   padding-bottom: 20px;
-}
+} */
 
 .ant-modal-content {
   border-radius: 10px !important;
@@ -221,6 +244,133 @@ body {
   padding-top: 3rem;
 }
 
+.nav-label {
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: var(--color-dark-slate-gray);
+  cursor: pointer;
+}
+.nav-label:hover {
+  color: var(--color-turquoise);
+}
+
+.custom-nav {
+  margin-bottom: 50px;
+}
+
+.another-logo {
+  width: 90%;
+}
+.about-us {
+  color: var(--color-dark-slate-gray);
+}
+.about-us-title {
+  font-weight: bold;
+  font-size: 2rem;
+}
+.about-us-description {
+  font-size: 1.3rem;
+}
+.covid-section {
+  background-color: var(--color-turquoise);
+  margin-top: 50px;
+  padding: 80px 0px 80px 0px;
+  color: var(--color-white);
+}
+.covid-img {
+  width: 250px;
+}
+.covid-title {
+  font-weight: bold;
+  font-size: 2rem;
+}
+.covid-list {
+  list-style: disc;
+}
+.covid-list-item {
+  font-size: 1.3rem;
+}
+.features-section {
+  padding: 80px 0px 80px 0px;
+  color: var(--color-dark-slate-gray);
+  background: url('./assets/bg_lines.png');
+  background-size: cover;
+  width: 100%;
+}
+.features-title {
+  font-weight: bold;
+  font-size: 2rem;
+}
+.feature-img {
+  width: 25%;
+}
+.feature-img-square {
+  width: 30%;
+}
+.feature-label {
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+.churches-section {
+  background-color: var(--color-white);
+  padding: 80px 0px 80px 0px;
+  -webkit-box-shadow: 5px 5px 20px 5px rgba(62, 57, 107, 0.16);
+  box-shadow: 5px 5px 20px 5px rgba(62, 57, 107, 0.16);
+  -moz-box-shadow: 5px 5px 20px 5px rgba(62, 57, 107, 0.16);
+  position: relative;
+}
+.churches-title {
+  font-weight: bold;
+  font-size: 2rem;
+}
+.church-card {
+  -webkit-box-shadow: 5px 5px 20px 5px rgba(62, 57, 107, 0.16);
+  box-shadow: 5px 5px 20px 5px rgba(62, 57, 107, 0.16);
+  -moz-box-shadow: 5px 5px 20px 5px rgba(62, 57, 107, 0.16);
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 30px;
+}
+.church-icon {
+  width: 80%;
+}
+.footer {
+  color: var(--color-dark-slate-gray);
+  background: url('./assets/bg_lines.png');
+  background-size: cover;
+  width: 100%;
+  padding: 30px 0px 30px 0px;
+}
+.footer-label {
+  font-size: 1rem;
+}
+.bottom-line {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.block-1 {
+  background-color: var(--color-dark-slate-gray);
+  width: 25%;
+  height: 10px;
+  display: block;
+}
+.block-2 {
+  background-color: var(--color-turquoise);
+  width: 25%;
+  height: 10px;
+  display: block;
+}
+.block-3 {
+  background-color: var(--color-custom-gray);
+  width: 25%;
+  height: 10px;
+  display: block;
+}
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   .service-title {
@@ -241,6 +391,19 @@ body {
   }
   .services-container {
     height: 100% !important;
+  }
+  .custom-nav {
+    padding-right: 10px;
+  }
+  .features-row {
+    justify-content: center;
+  }
+  .single-feature{
+    margin-bottom: 30px;
+    justify-content: center;
+  }
+  .footer{
+    padding-left: 10px;
   }
 }
 
@@ -265,6 +428,19 @@ body {
   .services-container {
     height: 100% !important;
   }
+  .custom-nav {
+    padding-right: 10px;
+  }
+  .features-row {
+    justify-content: center;
+  }
+  .single-feature{
+    margin-bottom: 30px;
+    justify-content: center;
+  }
+  .footer{
+    padding-left: 10px;
+  }
 }
 
 /* iPhone 5 (landscape)----------- */
@@ -288,6 +464,19 @@ body {
   .services-container {
     height: 100% !important;
   }
+  .custom-nav {
+    padding-right: 10px;
+  }
+  .features-row {
+    justify-content: center;
+  }
+  .single-feature{
+    margin-bottom: 30px;
+    justify-content: center;
+  }
+  .footer{
+    padding-left: 10px;
+  }
 }
 
 /* iPhone 5 (portrait)----------- */
@@ -310,5 +499,18 @@ body {
   }
   .services-container {
     height: 100% !important;
+  }
+  .custom-nav {
+    padding-right: 10px;
+  }
+  .features-row {
+    justify-content: center;
+  }
+  .single-feature{
+    margin-bottom: 30px;
+    justify-content: center;
+  }
+  .footer{
+    padding-left: 10px;
   }
 }
