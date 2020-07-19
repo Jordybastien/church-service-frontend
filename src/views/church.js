@@ -44,7 +44,12 @@ class Church extends Component {
   };
 
   handleRequest = (serviceId, service) =>
-    this.setState({ modal1Visible: true, serviceId, service });
+    this.setState({
+      modal1Visible: true,
+      serviceId,
+      service,
+      errorMessage: '',
+    });
 
   render() {
     const {
@@ -55,8 +60,10 @@ class Church extends Component {
       errorMessage,
       modal2Visible,
     } = this.state;
-    const { services, name, location, day, month } = this.props;
-
+    const { services, name, location, day, month, imageLocation } = this.props;
+    if (name) {
+      document.title = `${name} church services`;
+    }
     return (
       <Fragment>
         {service && (
@@ -92,11 +99,7 @@ class Church extends Component {
               <div className="row mb-3">
                 <div className="col-md-6 d-flex justify-content-center">
                   <div>
-                    {/* <img
-                      src={require('../assets/logo.png')}
-                      alt="ZTCC"
-                      className="logo"
-                    /> */}
+                    <img src={imageLocation} alt={name} className="logo" />
                   </div>
                 </div>
                 <div className="col-md-6">
@@ -259,6 +262,7 @@ const mapStateToProps = ({ churches }, props) => {
     location: selectedChurch[0] && selectedChurch[0].location,
     day: serviceDate && serviceDate.substr(8, 2),
     month: serviceDate && monthNames[serviceDate.substr(5, 2)],
+    imageLocation: selectedChurch[0] && selectedChurch[0].imageLocation,
   };
 };
 

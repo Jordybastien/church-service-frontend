@@ -161,12 +161,14 @@ class Homepage extends Component {
                       key={index}
                       onClick={() => this.props.history.push(`${church.slug}`)}
                     >
-                      {/* <img
-                      src={require('../assets/logo.png')}
-                      alt="ZTCC"
-                      className="church-icon"
-                    /> */}
-                      <span className="church-name">{church.name}</span>
+                      <img
+                        src={church.imageLocation}
+                        alt={church.name}
+                        className="church-icon"
+                      />
+                      <div>
+                        <span className="church-name">{church.name}</span>
+                      </div>
                     </div>
                   ))}
                 </div>

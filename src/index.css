@@ -19,11 +19,12 @@ body {
   margin: 0;
 }
 .wrapper {
-  background: url('./assets/bg.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
+  /* background: url('./assets/bg.jpg') no-repeat center center fixed; */
+  /* -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover;
+  background-size: cover; */
+  background-color: var(--color-white);
   padding: 20px;
   width: 100%;
   position: relative;
@@ -40,7 +41,11 @@ body {
   height: 100%;
 }
 .main-container {
-  background-color: var(--color-white);
+  background: url('./assets/bg_lines.png') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   padding: 10px;
   color: var(--color-dark-slate-gray);
 }
@@ -65,6 +70,7 @@ body {
 }
 
 .services-card {
+  background-color: var(--color-white);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -327,16 +333,18 @@ body {
   -webkit-box-shadow: 5px 5px 20px 5px rgba(62, 57, 107, 0.16);
   box-shadow: 5px 5px 20px 5px rgba(62, 57, 107, 0.16);
   -moz-box-shadow: 5px 5px 20px 5px rgba(62, 57, 107, 0.16);
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   margin-right: 30px;
+  flex-direction: column;
 }
 .church-icon {
-  width: 80%;
+  width: 70%;
+  height: 80%;
 }
 .footer {
   color: var(--color-dark-slate-gray);

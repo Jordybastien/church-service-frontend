@@ -14,17 +14,20 @@ const handleBooking = (booking) => {
 export const handleNewBooking = (booking) => {
   return async (dispatch) => {
     try {
-      await recordBooking(booking);
+      const newBooking = await recordBooking(booking);
       const services = await fetchServices();
-
-      dispatch(getServices(services));
-      return true;
+      
+      if (newBooking.responseCode === '103') {
+        return dispatch(logError(newBooking.responseDecription));
+      } else {
+        return dispatch(getServices(services));
+      }
     } catch (error) {
       return dispatch(
         logError(
           error.response
             ? error.response.data.message
-            : 'Failed to book service, Please contact Us'
+            : 'You have already booked this service'
         )
       );
     }
