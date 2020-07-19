@@ -371,6 +371,10 @@ body {
   height: 10px;
   display: block;
 }
+.church-name {
+  font-weight: bold;
+  color: var(--color-dark-slate-gray);
+}
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   .service-title {
@@ -398,11 +402,11 @@ body {
   .features-row {
     justify-content: center;
   }
-  .single-feature{
+  .single-feature {
     margin-bottom: 30px;
     justify-content: center;
   }
-  .footer{
+  .footer {
     padding-left: 10px;
   }
 }
@@ -434,11 +438,11 @@ body {
   .features-row {
     justify-content: center;
   }
-  .single-feature{
+  .single-feature {
     margin-bottom: 30px;
     justify-content: center;
   }
-  .footer{
+  .footer {
     padding-left: 10px;
   }
 }
@@ -470,11 +474,11 @@ body {
   .features-row {
     justify-content: center;
   }
-  .single-feature{
+  .single-feature {
     margin-bottom: 30px;
     justify-content: center;
   }
-  .footer{
+  .footer {
     padding-left: 10px;
   }
 }
@@ -506,11 +510,11 @@ body {
   .features-row {
     justify-content: center;
   }
-  .single-feature{
+  .single-feature {
     margin-bottom: 30px;
     justify-content: center;
   }
-  .footer{
+  .footer {
     padding-left: 10px;
   }
 }

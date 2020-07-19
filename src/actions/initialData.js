@@ -1,19 +1,19 @@
-import { getServices } from './service';
-import { fetchServices } from '../services/service';
 import { showLoading, hideLoading } from './loading';
+import { getChurches } from './church';
+import { fetchChurches } from '../services/church';
 
 const getInitialData = async () => {
-  const services = await fetchServices();
+  const churches = await fetchChurches();
 
-  return services;
+  return churches;
 };
 
 export const handleInitialData = () => {
   return async (dispatch) => {
     dispatch(showLoading());
     return getInitialData()
-      .then((services) => {
-        dispatch(getServices(services));
+      .then((churches) => {
+        dispatch(getChurches(churches));
         dispatch(hideLoading());
       })
       .catch(() => dispatch(hideLoading()));

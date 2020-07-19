@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class Homepage extends Component {
   state = {};
   render() {
+    const { churches } = this.props;
+
     return (
       <div className="homepage-wrapper">
         <div className="homepage-container">
@@ -152,13 +155,20 @@ class Homepage extends Component {
                   <span className="churches-title">CHURCHES</span>
                 </div>
                 <div className="col-md-10 d-flex flex-direction-row pl-5">
-                  <div className="church-card">
-                    <img
+                  {churches.map((church, index) => (
+                    <div
+                      className="church-card"
+                      key={index}
+                      onClick={() => this.props.history.push(`${church.slug}`)}
+                    >
+                      {/* <img
                       src={require('../assets/logo.png')}
                       alt="ZTCC"
                       className="church-icon"
-                    />
-                  </div>
+                    /> */}
+                      <span className="church-name">{church.name}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -166,14 +176,16 @@ class Homepage extends Component {
           <section id="footer" className="footer">
             <div className="container">
               <div className="row">
-                <span className='footer-label'>© COPYRIGHT {new Date().getFullYear()}</span>
+                <span className="footer-label">
+                  © COPYRIGHT {new Date().getFullYear()}
+                </span>
               </div>
             </div>
           </section>
-          <div className='bottom-line'>
-              <span className='block-1'/>
-              <span className='block-2'/>
-              <span className='block-3'/>
+          <div className="bottom-line">
+            <span className="block-1" />
+            <span className="block-2" />
+            <span className="block-3" />
           </div>
         </div>
       </div>
@@ -181,4 +193,10 @@ class Homepage extends Component {
   }
 }
 
-export default Homepage;
+const mapStateToProps = ({ churches }) => {
+  return {
+    churches: Object.values(churches),
+  };
+};
+
+export default connect(mapStateToProps)(Homepage);

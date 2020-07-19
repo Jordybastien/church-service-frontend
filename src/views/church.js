@@ -4,6 +4,7 @@ import { Button, Progress, Modal, Result, Skeleton } from 'antd';
 import { connect } from 'react-redux';
 import BookService from '../components/bookService';
 import { handleNewBooking } from '../actions/booking';
+import { monthNames } from '../utils/churches';
 
 const options = [
   { value: 'kinyarwanda', label: 'Kinyarwanda' },
@@ -54,7 +55,7 @@ class Church extends Component {
       errorMessage,
       modal2Visible,
     } = this.state;
-    const { services } = this.props;
+    const { services, name, location, day, month } = this.props;
 
     return (
       <Fragment>
@@ -91,47 +92,62 @@ class Church extends Component {
               <div className="row mb-3">
                 <div className="col-md-6 d-flex justify-content-center">
                   <div>
-                    <img
+                    {/* <img
                       src={require('../assets/logo.png')}
                       alt="ZTCC"
                       className="logo"
-                    />
+                    /> */}
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="d-flex justify-content-end pt-4">
-                    <Select
-                      value={selectedOption}
-                      onChange={this.handleSelect}
-                      options={options}
-                      placeholder="Language"
-                      className="language-select"
-                      isSearchable={false}
-                    />
+                    {services && (
+                      <Select
+                        value={selectedOption}
+                        onChange={this.handleSelect}
+                        options={options}
+                        placeholder="Language"
+                        className="language-select"
+                        isSearchable={false}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
               <div className="row">
                 <div className="col-md-7 custom-padding-top">
                   <div className="custom-padding-top">
-                    <div>
-                      <span className="header-text"> Welcome to ZTCC</span>
-                    </div>
-                    <div>
-                      <span className="register-text">
-                        Register here for Zion Temple Ngoma church services.
-                      </span>
-                    </div>
+                    {services ? (
+                      <>
+                        <div>
+                          <span className="header-text">
+                            {' '}
+                            Welcome to {name}
+                          </span>
+                        </div>
+                        <div>
+                          <span className="register-text">
+                            Register here for {name} {location} church services.
+                          </span>
+                        </div>
+                      </>
+                    ) : (
+                      <div>
+                        <span className="header-text"> Page not found</span>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="col-md-5">
                   <div className="services-card">
                     <div className="date-box mb-5">
-                      <span className="date-box-label">Jul</span>
-                      <span className="date-box-label">12</span>
+                      <span className="date-box-label">
+                        {month && month.acc}
+                      </span>
+                      <span className="date-box-label">{day}</span>
                     </div>
                     <div className="services-container">
-                      {services.length !== 0 ? (
+                      {services ? (
                         services.map((service, index) => (
                           <div
                             className={`${
@@ -225,9 +241,24 @@ class Church extends Component {
   }
 }
 
-const mapStateToProps = ({ services }) => {
+const mapStateToProps = ({ churches }, props) => {
+  const { slug } = props.match.params;
+
+  const selectedChurch = Object.values(churches).filter(
+    (church) => church.slug === slug
+  );
+
+  const serviceDate =
+    selectedChurch[0] &&
+    selectedChurch[0].services &&
+    selectedChurch[0].services[0].serviceDate;
+
   return {
-    services: Object.values(services),
+    services: selectedChurch[0] && selectedChurch[0].services,
+    name: selectedChurch[0] && selectedChurch[0].name,
+    location: selectedChurch[0] && selectedChurch[0].location,
+    day: serviceDate && serviceDate.substr(8, 2),
+    month: serviceDate && monthNames[serviceDate.substr(5, 2)],
   };
 };
 

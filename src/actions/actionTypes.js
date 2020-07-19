@@ -10,3 +10,6 @@ export const NOT_LOADING = 'NOT_LOADING';
 
 // Manage Errors
 export const LOG_ERROR = 'LOG_ERROR';
+
+// fetch churches
+export const FETCH_CHURCHES = 'FETCH_CHURCHES';
