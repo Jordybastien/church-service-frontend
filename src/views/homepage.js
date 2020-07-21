@@ -5,7 +5,8 @@ class Homepage extends Component {
   state = {};
   render() {
     const { churches } = this.props;
-
+    if (window.screen.width > 600) {
+    }
     return (
       <div className="homepage-wrapper">
         <div className="homepage-container">
@@ -46,7 +47,13 @@ class Homepage extends Component {
                     </span>
                   </div>
                 </div>
-                <div className="col-md-4 d-flex justify-content-end">
+                <div
+                  className={`col-md-4 d-flex ${
+                    window.screen.width > 600
+                      ? 'justify-content-end'
+                      : 'justify-content-center'
+                  }`}
+                >
                   <img
                     src={require('../assets/icon-2.png')}
                     alt="ZTCC"

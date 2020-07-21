@@ -417,6 +417,18 @@ body {
   .footer {
     padding-left: 10px;
   }
+  .another-logo {
+    width: 300px;
+    height: 300px;
+  }
+  .feature-img-square {
+    width: 90px;
+    height: 90px;
+  }
+  .feature-img {
+    width: 80px;
+    height: 105px;
+  }
 }
 
 /* iPhone 5 (portrait &amp; landscape)----------- */
@@ -452,6 +464,18 @@ body {
   }
   .footer {
     padding-left: 10px;
+  }
+  .another-logo {
+    width: 300px;
+    height: 300px;
+  }
+  .feature-img-square {
+    width: 90px;
+    height: 90px;
+  }
+  .feature-img {
+    width: 80px;
+    height: 105px;
   }
 }
 
@@ -489,6 +513,18 @@ body {
   .footer {
     padding-left: 10px;
   }
+  .another-logo {
+    width: 300px;
+    height: 300px;
+  }
+  .feature-img-square {
+    width: 90px;
+    height: 90px;
+  }
+  .feature-img {
+    width: 80px;
+    height: 105px;
+  }
 }
 
 /* iPhone 5 (portrait)----------- */
@@ -524,5 +560,17 @@ body {
   }
   .footer {
     padding-left: 10px;
+  }
+  .another-logo {
+    width: 300px;
+    height: 300px;
+  }
+  .feature-img-square {
+    width: 90px;
+    height: 90px;
+  }
+  .feature-img {
+    width: 80px;
+    height: 105px;
   }
 }

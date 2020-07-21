@@ -64,6 +64,7 @@ class Church extends Component {
     if (name) {
       document.title = `${name} church services`;
     }
+    
     return (
       <Fragment>
         {service && (
