@@ -5,10 +5,13 @@ import { connect } from 'react-redux';
 import BookService from '../components/bookService';
 import { handleNewBooking } from '../actions/booking';
 import { monthNames } from '../utils/churches';
+import { languages } from '../utils/languages';
+
+const churchKey = 'ChurchService:Key';
 
 const options = [
-  { value: 'kinyarwanda', label: 'Kinyarwanda' },
-  { value: 'english', label: 'English' },
+  { value: 'kn', label: 'Kinyarwanda' },
+  { value: 'en', label: 'English' },
 ];
 
 class Church extends Component {
@@ -20,11 +23,18 @@ class Church extends Component {
     serviceId: null,
     service: null,
     errorMessage: '',
+    language: 'en',
   };
 
-  handleSelect = () => {
-    console.log('======> Clicked');
+  handleSelect = ({ value }) => {
+    localStorage.setItem(churchKey, value);
+    window.location.href = window.location.href;
   };
+
+  componentDidMount() {
+    const language = localStorage.getItem(churchKey);
+    language && this.setState({ language });
+  }
 
   handleSubmit = (data) => {
     this.setState({ loading: true, errorMessage: '' });
@@ -59,12 +69,14 @@ class Church extends Component {
       service,
       errorMessage,
       modal2Visible,
+      language,
     } = this.state;
     const { services, name, location, day, month, imageLocation } = this.props;
+
     if (name) {
       document.title = `${name} church services`;
     }
-    
+
     return (
       <Fragment>
         {service && (
@@ -79,6 +91,7 @@ class Church extends Component {
               service={service}
               handleSubmit={this.handleSubmit}
               errorMessage={errorMessage}
+              language={language}
             />
           </Modal>
         )}
@@ -90,8 +103,8 @@ class Church extends Component {
         >
           <Result
             status="success"
-            title="Booked Successfully"
-            subTitle="The seat has been booked successfully, Kindly wait for a confirmation SMS"
+            title={languages[language].bookedTitle}
+            subTitle={languages[language].success}
           />
         </Modal>
         <div className="wrapper">
@@ -125,13 +138,14 @@ class Church extends Component {
                       <>
                         <div>
                           <span className="header-text">
-                            {' '}
-                            Welcome to {name}
+                            {languages[language].welcome} {name}
                           </span>
                         </div>
                         <div>
                           <span className="register-text">
-                            Register here for {name} {location} church services.
+                            {language === 'english'
+                              ? `${languages[language].description} ${name} ${location} ${languages[language].descriptionTwo}`
+                              : `${languages[language].description} ${name} ${location}`}
                           </span>
                         </div>
                       </>
@@ -191,7 +205,7 @@ class Church extends Component {
                                     0
                                   }
                                 >
-                                  Register
+                                  {languages[language].button}
                                 </Button>
                               </div>
                             </div>
@@ -207,7 +221,7 @@ class Church extends Component {
                               </div>
                               <div className="stat-text">
                                 {service.numberOfSeats - service.takenSeats}{' '}
-                                seats left
+                                {languages[language].seatsLeft}
                               </div>
                             </div>
                           </div>
@@ -225,13 +239,13 @@ class Church extends Component {
                         <div>
                           <span className="booked"></span>
                         </div>
-                        <span>booked</span>
+                        <span>{languages[language].booked}</span>
                       </div>
                       <div className="footer-element">
                         <div>
                           <span className="available"></span>
                         </div>
-                        <span>available</span>
+                        <span>{languages[language].available}</span>
                       </div>
                     </div>
                   </div>

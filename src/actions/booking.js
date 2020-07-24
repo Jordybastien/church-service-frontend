@@ -3,6 +3,9 @@ import { recordBooking } from '../services/booking';
 import { fetchServices } from '../services/service';
 import { getServices } from './service';
 import { logError } from './error';
+import { languages } from '../utils/languages';
+
+const churchKey = 'ChurchService:Key';
 
 const handleBooking = (booking) => {
   return {
@@ -12,11 +15,15 @@ const handleBooking = (booking) => {
 };
 
 export const handleNewBooking = (booking) => {
+  let used = 'en';
+  let language = localStorage.getItem(churchKey);
+  if (language) used = language;
+  
   return async (dispatch) => {
     try {
       const newBooking = await recordBooking(booking);
       const services = await fetchServices();
-      
+
       if (newBooking.responseCode === '103') {
         return dispatch(logError(newBooking.responseDecription));
       } else {
@@ -25,9 +32,7 @@ export const handleNewBooking = (booking) => {
     } catch (error) {
       return dispatch(
         logError(
-          error.response
-            ? error.response.data.message
-            : 'You have already booked this service'
+          error.response ? error.response.data.message : languages[used].error
         )
       );
     }

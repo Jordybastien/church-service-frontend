@@ -3,6 +3,7 @@ import TextBox from '../textbox';
 import { Button, Alert } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { languages } from '../../utils/languages';
 
 class BookService extends Component {
   state = {
@@ -102,7 +103,7 @@ class BookService extends Component {
   };
 
   render() {
-    const { service, loading, errorMessage } = this.props;
+    const { service, loading, errorMessage, language } = this.props;
     const { errors } = this.state;
 
     return (
@@ -135,7 +136,7 @@ class BookService extends Component {
         </div>
         <div className="row txt-box-container">
           <div>
-            <span className="input-label">Full Names</span>
+            <span className="input-label">{languages[language].name}</span>
           </div>
           <div>
             <TextBox
@@ -147,7 +148,7 @@ class BookService extends Component {
         </div>
         <div className="row txt-box-container">
           <div>
-            <span className="input-label">Phone Number</span>
+            <span className="input-label">{languages[language].phone}</span>
           </div>
           <div>
             <TextBox
@@ -159,7 +160,7 @@ class BookService extends Component {
         </div>
         <div className="row txt-box-container">
           <div>
-            <span className="input-label">Home Address</span>
+            <span className="input-label">{languages[language].address}</span>
           </div>
           <div>
             <TextBox
@@ -171,7 +172,7 @@ class BookService extends Component {
         </div>
         <div className="row txt-box-container">
           <div>
-            <span className="input-label">Age</span>
+            <span className="input-label">{languages[language].age}</span>
           </div>
           <div>
             <TextBox
@@ -195,7 +196,7 @@ class BookService extends Component {
                 className="ml-2"
               />
             ) : (
-              'Register'
+              `${languages[language].button}`
             )}
           </Button>
         </div>
