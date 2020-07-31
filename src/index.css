@@ -30,6 +30,18 @@ body {
   position: relative;
   height: 100%;
 }
+
+.login-wrapper {
+  background-color: var(--color-turquoise);
+  padding: 20px;
+  width: 100%;
+  position: relative;
+  height: 100vh;
+}
+.menu-container{
+  display: flex;
+  
+}
 .homepage-wrapper {
   background: url('./assets/bg_lines.png') no-repeat center center fixed;
   -webkit-background-size: cover;

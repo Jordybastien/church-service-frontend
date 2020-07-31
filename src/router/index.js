@@ -4,14 +4,16 @@ import Church from '../views/church';
 import Homepage from '../views/homepage';
 import Dashboard from '../views/dashboard';
 import NotFound from '../views/notFound';
+import Login from '../views/login';
 
 const Routing = () => {
   return (
     <Router>
       <Switch>
         <Route path="/" exact component={Homepage} />
-        <Route path="/:slug" component={Church} />
+        <Route path="/church/:slug" component={Church} />
         <Route path="/dashboard" component={Dashboard} />
+        <Route path="/login" component={Login} />
         <Route component={NotFound} />
       </Switch>
     </Router>

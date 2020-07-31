@@ -20,8 +20,13 @@ class Homepage extends Component {
                     className="logo"
                   />
                 </div>
-                <div>
-                  <span className="nav-label">About us</span>
+                <div className="menu-container">
+                  <div>
+                    <span className="nav-label mr-3">About us</span>
+                  </div>
+                  <div onClick={() => this.props.history.push('/login')}>
+                    <span className="nav-label">Login</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -166,7 +171,9 @@ class Homepage extends Component {
                     <div
                       className="church-card"
                       key={index}
-                      onClick={() => this.props.history.push(`${church.slug}`)}
+                      onClick={() =>
+                        this.props.history.push(`church/${church.slug}`)
+                      }
                     >
                       <img
                         src={church.imageLocation}
@@ -183,7 +190,7 @@ class Homepage extends Component {
             </div>
           </section>
           <section id="footer" className="footer">
-            <div className="container">
+            <div className="container my-3">
               <div className="row">
                 <span className="footer-label">
                   © COPYRIGHT {new Date().getFullYear()}
