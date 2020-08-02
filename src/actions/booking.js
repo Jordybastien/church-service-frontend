@@ -1,5 +1,8 @@
-import { RECORD_SERVICE_BOOKING } from './actionTypes';
-import { recordBooking } from '../services/booking';
+import {
+  RECORD_SERVICE_BOOKING,
+  ADMIN_FETCH_BOOKINGS_BY_DATE,
+} from './actionTypes';
+import { recordBooking, fetchBookings } from '../services/booking';
 import { fetchServices } from '../services/service';
 import { getServices } from './service';
 import { logError } from './error';
@@ -18,7 +21,7 @@ export const handleNewBooking = (booking) => {
   let used = 'en';
   let language = localStorage.getItem(churchKey);
   if (language) used = language;
-  
+
   return async (dispatch) => {
     try {
       const newBooking = await recordBooking(booking);
@@ -36,5 +39,20 @@ export const handleNewBooking = (booking) => {
         )
       );
     }
+  };
+};
+
+export const bookingsByDate = (bookings) => {
+  return {
+    type: ADMIN_FETCH_BOOKINGS_BY_DATE,
+    bookings,
+  };
+};
+
+export const handleFetchingBookings = (serviceID, serviceDate) => {
+  return async (dispatch) => {
+    return fetchBookings(serviceID, serviceDate).then((bookings) => {
+      dispatch(bookingsByDate(bookings));
+    });
   };
 };

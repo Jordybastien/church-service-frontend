@@ -7,6 +7,7 @@ import churches from './church';
 import authedUser from './authedUser';
 import link from './callBackLink';
 import churchServices from './churchServices';
+import bookings from './bookings';
 
 export default combineReducers({
   form: formReducer,
@@ -17,4 +18,5 @@ export default combineReducers({
   authedUser,
   link,
   churchServices,
+  bookings,
 });

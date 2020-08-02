@@ -129,6 +129,7 @@ body {
   height: 200px;
   box-shadow: 5px 5px 20px 5px rgb(62 57 107 / 10%);
   -moz-box-shadow: 5px 5px 20px 5px rgb(62 57 107 / 10%);
+  cursor: pointer;
 }
 .dashboard-service-header {
   padding: 10px 20px 10px 20px;
@@ -164,6 +165,16 @@ body {
   color: var(--color-light-slate-gray);
   font-weight: bold;
 }
+.spinner-cont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+}
+.select-container {
+  display: flex;
+  justify-content: flex-end;
+}
 .ant-tooltip-inner {
   background-color: rgb(62 85 97 / 65%);
 }
@@ -179,7 +190,7 @@ body {
   z-index: 0;
 }
 .ant-slider-track {
-  background-color: var(--color-turquoise)!important;
+  background-color: var(--color-turquoise) !important;
 }
 .grid-container {
   display: grid;
@@ -442,6 +453,10 @@ body {
   color: var(--color-dark-slate-gray);
 }
 
+.church-service-datetime {
+  color: var(--color-dark-slate-gray);
+  font-weight: bold;
+}
 @media only screen and (min-width: 46.875em) {
   .grid-container {
     grid-template-columns: 280px 1fr;

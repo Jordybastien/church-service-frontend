@@ -36,7 +36,7 @@ class Dashboard extends Component {
     document.title = 'Dashboard';
 
     const { showSideBar, showChildren } = this.state;
-    // const { authedUser } = this.props;
+    const { authedUser: authed } = this.props;
     const authedUser = 'Admin';
 
     return (
@@ -64,11 +64,14 @@ class Dashboard extends Component {
                       </span> */}
                       <div className="user-avatar-container">
                         <div className="avatar-container">
-                          <img
+                          {/* <img
                             src={require('../assets/main-logo.png')}
                             className="user-avatar"
                             alt="avatar"
-                          />
+                          /> */}
+                          <span className="override-menu-dashboard mr-2">
+                            {`${authed.names}`}
+                          </span>
                         </div>
                         <FontAwesomeIcon
                           icon={faCaretDown}
@@ -106,7 +109,7 @@ class Dashboard extends Component {
               <img
                 src={require('../assets/main-logo.png')}
                 className="dashboard-logo show-cursor mb-5"
-                alt="Murugo App"
+                alt="Church Service"
                 onClick={() => this.props.history.push('/')}
               />
             </div>
@@ -253,10 +256,10 @@ class Dashboard extends Component {
   }
 }
 
-// const mapStateToProps = ({ authedUser }) => {
-//   return {
-//     authedUser,
-//   };
-// };
+const mapStateToProps = ({ authedUser }) => {
+  return {
+    authedUser,
+  };
+};
 
-export default connect()(Dashboard);
+export default connect(mapStateToProps)(Dashboard);
