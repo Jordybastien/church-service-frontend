@@ -1,12 +1,8 @@
 import { showLoading, hideLoading } from './loading';
-import { getChurches } from './church';
-import { fetchChurches } from '../services/church';
+import { getChurches, getChurchServices } from './church';
+import { fetchChurches, fetchChurchServices } from '../services/church';
 
-const getInitialData = async () => {
-  const churches = await fetchChurches();
-
-  return churches;
-};
+const getInitialData = async () => await fetchChurches();
 
 export const handleInitialData = () => {
   return async (dispatch) => {
@@ -19,3 +15,17 @@ export const handleInitialData = () => {
       .catch(() => dispatch(hideLoading()));
   };
 };
+
+export const handleChurchData = () => {
+  return async (dispatch) => {
+    dispatch(showLoading());
+    return getChurchData()
+      .then((churchServices) => {
+        dispatch(getChurchServices(churchServices));
+        dispatch(hideLoading());
+      })
+      .catch(() => dispatch(hideLoading()));
+  };
+};
+
+const getChurchData = async () => await fetchChurchServices();

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Redirect } from 'react-router-dom';
-// import { handleUserLogin } from '../actions/authedUser';
+import { handleUserLogin } from '../actions/authedUser';
 
 class Login extends Component {
   state = {
@@ -33,15 +33,17 @@ class Login extends Component {
   handleFormSubmit = () => {
     const { data, response } = this.checkValidation();
     if (response) {
+      data.MSISDN = '+25' + data.MSISDN;
       this.setState({ loading: true, errorMessage: '' });
-      // this.props.dispatch(handleUserLogin(data)).then((res) => {
-      //   this.setState({ loading: false });
-      //   if (res.type !== 'LOG_ERROR') {
-      //     return (window.location.href = this.props.link || '/dashboard');
-      //   } else {
-      //     this.setState({ errorMessage: res.error });
-      //   }
-      // });
+      this.props.dispatch(handleUserLogin(data)).then((res) => {
+        this.setState({ loading: false });
+
+        if (res.type !== 'LOG_ERROR') {
+          return (window.location.href = this.props.link || '/dashboard');
+        } else {
+          this.setState({ errorMessage: res.error });
+        }
+      });
     }
   };
 
@@ -50,22 +52,25 @@ class Login extends Component {
     let response = true;
     let data = {};
 
-    data.email = email;
+    data.MSISDN = email;
     data.password = password;
 
     if (!email) {
-      errors.email = 'Required';
+      errors.email = 'Phone Number is Required';
       response = false;
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-      errors.email = 'Invalid email address';
+    } else if (isNaN(email)) {
+      errors.email = 'Phone Number must be numeric';
+      response = false;
+    } else if (email.length < 10 || email.length > 10) {
+      errors.email = 'Invalid Phone Number';
       response = false;
     }
 
     if (!password) {
-      errors.password = 'Required';
+      errors.password = 'PIN is Required';
       response = false;
-    } else if (password.length < 6) {
-      errors.password = 'Minimum be 6 characters or more';
+    } else if (isNaN(password)) {
+      errors.email = 'PIN must be numeric';
       response = false;
     }
 
@@ -74,7 +79,7 @@ class Login extends Component {
   };
 
   render() {
-    const { email, password, errors, loading, errorMessage } = this.state;
+    const { errors, loading, errorMessage } = this.state;
     const { isAuth } = this.props;
 
     if (isAuth) {
@@ -120,7 +125,7 @@ class Login extends Component {
                 </div>
                 <div className="row txt-box-container">
                   <div>
-                    <span className="input-label">Email</span>
+                    <span className="input-label">Phone Number</span>
                   </div>
                   <div>
                     <TextBox
@@ -132,7 +137,7 @@ class Login extends Component {
                 </div>
                 <div className="row txt-box-container mb-5">
                   <div>
-                    <span className="input-label">Password</span>
+                    <span className="input-label">PIN</span>
                   </div>
                   <div>
                     <TextBox

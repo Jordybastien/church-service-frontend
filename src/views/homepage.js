@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 class Homepage extends Component {
   state = {};
   render() {
-    const { churches } = this.props;
+    const { churches, isAuth } = this.props;
     if (window.screen.width > 600) {
     }
     return (
@@ -24,9 +24,15 @@ class Homepage extends Component {
                   <div>
                     <span className="nav-label mr-3">About us</span>
                   </div>
-                  <div onClick={() => this.props.history.push('/login')}>
-                    <span className="nav-label">Login</span>
-                  </div>
+                  {!isAuth ? (
+                    <div onClick={() => this.props.history.push('/login')}>
+                      <span className="nav-label">Login</span>
+                    </div>
+                  ) : (
+                    <div onClick={() => this.props.history.push('/dashboard')}>
+                      <span className="nav-label">Dashboard</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -209,9 +215,10 @@ class Homepage extends Component {
   }
 }
 
-const mapStateToProps = ({ churches }) => {
+const mapStateToProps = ({ churches, authedUser }) => {
   return {
     churches: Object.values(churches),
+    isAuth: Object.keys(authedUser).length !== 0,
   };
 };
 

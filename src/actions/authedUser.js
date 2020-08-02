@@ -1,7 +1,6 @@
 import { SET_AUTHED_USER, LOGOUT_USER } from './actionTypes';
 import { logError } from './error';
-// import { decodeToken, tokenKey } from '../services/auth';
-// import { loginUser } from '../services/users';
+import { tokenKey, loginUser } from '../services/auth';
 
 export const setAuthedUser = (user) => {
   return {
@@ -16,22 +15,27 @@ export const logoutUser = () => {
   };
 };
 
-// export const handleUserLogin = (user) => {
-//   return async (dispatch) => {
-//     try {
-//       const { token } = await loginUser(user);
-//       localStorage.setItem(tokenKey, token);
-//       const loggedIn = decodeToken();
-//       dispatch(setAuthedUser(loggedIn));
-//       return true;
-//     } catch (error) {
-//       return dispatch(
-//         logError(
-//           error.response
-//             ? error.response.data.error
-//             : 'Failed to authenticate Please contact Us'
-//         )
-//       );
-//     }
-//   };
-// };
+export const handleUserLogin = (user) => {
+  return async (dispatch) => {
+    try {
+      const authenticate = await loginUser(user);
+      if (authenticate.responseCode === '101') {
+        return dispatch(logError(authenticate.responseMessage));
+      } else {
+        localStorage.setItem(
+          tokenKey,
+          JSON.stringify(authenticate.meta.content)
+        );
+        return dispatch(setAuthedUser(authenticate.meta.content));
+      }
+    } catch (error) {
+      return dispatch(
+        logError(
+          error.response
+            ? error.response.data.error
+            : 'Failed to authenticate Please contact Us'
+        )
+      );
+    }
+  };
+};

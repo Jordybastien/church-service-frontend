@@ -6,6 +6,7 @@ import error from './error';
 import churches from './church';
 import authedUser from './authedUser';
 import link from './callBackLink';
+import churchServices from './churchServices';
 
 export default combineReducers({
   form: formReducer,
@@ -15,4 +16,5 @@ export default combineReducers({
   churches,
   authedUser,
   link,
+  churchServices,
 });

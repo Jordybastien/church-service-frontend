@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import '../dashboard.css';
-// import { tokenKey } from '../services/auth';
-// import { logoutUser } from '../actions/authedUser';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -16,6 +14,8 @@ import { NavLink } from 'react-router-dom';
 import { faBell } from '@fortawesome/free-regular-svg-icons';
 import DashboardRouting from '../router/dashboardRoutes';
 import { AdminRoutes, AllRoles } from '../utils/constants';
+import { logoutUser } from '../actions/authedUser';
+import { tokenKey } from '../services/auth';
 
 const SubMenu = Menu.SubMenu;
 
@@ -27,9 +27,9 @@ class Dashboard extends Component {
   };
 
   handleLogoutUser = () => {
-    // localStorage.removeItem(tokenKey);
-    // this.props.dispatch(logoutUser());
-    // this.props.history.push('/');
+    localStorage.removeItem(tokenKey);
+    this.props.dispatch(logoutUser());
+    this.props.history.push('/');
   };
 
   render() {
